@@ -38,10 +38,8 @@ def index():
 @app.route('/<username>',methods=['GET'])
 def user(username):
 	(db,cursor) = connectdb()
-	print username
 	cursor.execute('select * from user where name=%s',[username])
 	user = cursor.fetchone()
-	print user
 	cursor.execute('select * from moonCake where id=%s',[user['moonCakeId']])
 	cake = cursor.fetchone()
 	closedb(db,cursor)
