@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% if user %}
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% if user %}
     <title>我是{{user.name}}，我为{{cake.name}}代言</title>
     {% else %}
     <title>看看我属于哪种月饼</title>
@@ -13,6 +12,7 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="Honlan" />
+    <img src="{{url_for('static',filename='img/cake.png')}}" alt="" style="display:none;">
     <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" />
     <link rel="shortcut icon" href="{{url_for('static',filename='img/logo.jpg')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/animate.css')}}">
@@ -156,7 +156,6 @@ $(document).ready(function() {
                     $('#content').append(me);
                     $('#share').show();
                     $('title').text("我是" + data['name'] + "，我为" + data['cake']['name'] + '代言');
-                    $('head').prepend('<div style="display:none;"><img src="' + "{{url_for('static',filename='')}}" + data['cake']['image'] + '"></div>');
                 }
             });
         }
