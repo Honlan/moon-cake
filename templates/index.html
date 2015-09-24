@@ -28,17 +28,17 @@
     }
     
     #main {
-        padding: 30px;
-        padding-bottom: 100px;
+        padding: 10px;
+        padding-bottom: 80px;
         text-align: center;
     }
     
     #add input {
         margin-bottom: 30px;
-        margin-top: 10px;
-        width: 60%;
-        margin-left: 20%;
-        margin-right: 20%;
+        margin-top: 0px;
+        width: 40%;
+        margin-left: 30%;
+        margin-right: 30%;
         background-color: #FFF9ED;
     }
     
@@ -107,13 +107,13 @@
             {% if user %}
             <div id="me">
                 <h4 style="color:#888;line-height:1.5;">我是<span style="color:#FF3C3C;margin-left:10px;font-size:25px;">{{user.name}}</span><br>我为<span style="color:#3C85FF;margin-left:10px;margin-right:10px;font-size:25px;">{{cake.name}}</span>代言</h4>
-                <img src="{{url_for('static',filename='')}}{{cake.image}}" alt="" style="margin-top:10px;width:80%;margin-left:10%;margin-right:10%;border-radius:10px;box-shadow:5px 5px 10px rgba(20,20,20,0.3);margin-bottom:30px;">
-                <p style="width:80%;margin-left:10%;margin-right:10%;color:#4B9C34;">{{cake.description}}</p>
+                <img src="{{url_for('static',filename='')}}{{cake.image}}" alt="" style="margin-top:0px;width:60%;margin-left:20%;margin-right:20%;border-radius:10px;box-shadow:5px 5px 10px rgba(20,20,20,0.3);margin-bottom:10px;">
+                <p style="width:60%;margin-left:20%;margin-right:20%;color:#4B9C34;">{{cake.description}}</p>
             </div>
             {% else %}
             <div id="add">
-                <h1><span style="color:#41BF42;font-size:25px;margin-right:10px;" id="word1">看看</span><span style="color:#F95353;font-size:30px;" id="word2">我属于</span><br><span style="color:#888;font-size:20px;margin-right:5px;" id="word3">哪种</span><span style="color:#D89422;font-size:35px;" id="word4">月饼</span></h1>
-                <img src="{{url_for('static',filename='img/cake.png')}}" alt="" style='width:80%;margin-left:10%;margin-right:10%;margin-bottom:20px;'>
+                <h1 style="margin-top:0px;"><span style="color:#41BF42;font-size:25px;margin-right:10px;" id="word1">看看</span><span style="color:#F95353;font-size:30px;" id="word2">我属于</span><br><span style="color:#888;font-size:20px;margin-right:5px;" id="word3">哪种</span><span style="color:#D89422;font-size:35px;" id="word4">月饼</span></h1>
+                <img src="{{url_for('static',filename='img/cake.png')}}" alt="" style='width:60%;margin-left:20%;margin-right:20%;margin-bottom:20px;'>
                 <div class="form-group">
                     <input type="text" name="username" placeholder="请输入您的姓名～" class="form-control">
                     <p><span id="submit">查看</span></p>
@@ -133,48 +133,8 @@
 </body>
 <script>
 $(document).ready(function() {
-    $('#word1').textillate({
-        initialDelay: 0,
-        in : {
-            effect: 'bounceIn',
-            delay: 60,
-            shuffle: false,
-            reverse: false,
-            sync: false
-        }
-    });
-    $('#word2').textillate({
-        initialDelay: 500,
-        in : {
-            effect: 'bounceIn',
-            delay: 60,
-            shuffle: false,
-            reverse: true,
-            sync: false
-        }
-    });
-    $('#word3').textillate({
-        initialDelay: 1000,
-        in : {
-            effect: 'bounceIn',
-            delay: 60,
-            shuffle: false,
-            reverse: false,
-            sync: false
-        }
-    });
-    $('#word4').textillate({
-        initialDelay: 1500,
-        in : {
-            effect: 'bounceIn',
-            delay: 60,
-            shuffle: false,
-            reverse: true,
-            sync: false
-        }
-    });
     if ("{{user}}" != "None") {
-        $('#share').fadeIn(1600);
+        $('#share').show();
     }
     $('#add #submit').click(function() {
         var username = $('#add input').val();
@@ -192,9 +152,9 @@ $(document).ready(function() {
                 error: function() {},
                 success: function(data) {
                     $('#add').hide();
-                    var me = '<div id="me"><h4 style="color:#888;line-height:1.5;">我是<span style="color:#FF3C3C;margin-left:10px;font-size:25px;">' + data['name'] + '</span><br>我为<span style="color:#3C85FF;margin-left:10px;margin-right:10px;font-size:25px;">' + data['cake']['name'] + '</span>代言</h4><img src="' + "{{url_for('static',filename='')}}" + data['cake']['image'] + '" alt="" style="margin-top:10px;width:80%;margin-left:10%;margin-right:10%;border-radius:10px;box-shadow:5px 5px 10px rgba(20,20,20,0.3);margin-bottom:30px;"><p style="width:80%;margin-left:10%;margin-right:10%;color:#4B9C34;">' + data['cake']['description'] + '</p></div>';
+                    var me = '<div id="me"><h4 style="color:#888;line-height:1.5;">我是<span style="color:#FF3C3C;margin-left:10px;font-size:25px;">' + data['name'] + '</span><br>我为<span style="color:#3C85FF;margin-left:10px;margin-right:10px;font-size:25px;">' + data['cake']['name'] + '</span>代言</h4><img src="' + "{{url_for('static',filename='')}}" + data['cake']['image'] + '" alt="" style="margin-top:0px;width:60%;margin-left:20%;margin-right:20%;border-radius:10px;box-shadow:5px 5px 10px rgba(20,20,20,0.3);margin-bottom:10px;"><p style="width:60%;margin-left:20%;margin-right:20%;color:#4B9C34;">' + data['cake']['description'] + '</p></div>';
                     $('#content').append(me);
-                    $('#share').fadeIn(1600);
+                    $('#share').show();
                 }
             });
         }
