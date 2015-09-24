@@ -27,7 +27,7 @@ def closedb(db,cursor):
 	db.close()
 	cursor.close()
 
-@app.route('/',methods=['GET'])
+@app.route('/')
 def index():
 	cake = None
 	user = None
