@@ -27,19 +27,28 @@ def closedb(db,cursor):
 	db.close()
 	cursor.close()
 
-@app.route('/')
+@app.route('/',methods=['GET'])
 def index():
-	cake = None
-	user = None
 	if not session.get('username') == None:
-		username = session.get('username')
-		(db,cursor) = connectdb()
-		cursor.execute('select * from user where name=%s',[username])
-		user = cursor.fetchone()
-		cursor.execute('select * from moonCake where id=%s',[user['moonCakeId']])
-		cake = cursor.fetchone()
-		closedb(db,cursor)
-	return render_template('index.html',user=user,cake=cake)
+		return redirect(url_for('user',username=session.get('username')))
+	else:
+		return render_template('index.html')
+		
+
+@app.route('/<username>',methods=['GET'])
+def user(username):
+	(db,cursor) = connectdb()
+	print username
+	cursor.execute('select * from user where name=%s',[username])
+	user = cursor.fetchone()
+	print user
+	cursor.execute('select * from moonCake where id=%s',[user['moonCakeId']])
+	cake = cursor.fetchone()
+	closedb(db,cursor)
+	me = False
+	if not session.get('username') == None and session.get('username') == username:
+		me = True
+	return render_template('user.html',user=user,cake=cake,me=me)
 
 @app.route('/add',methods=['POST'])
 def add():

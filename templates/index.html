@@ -4,23 +4,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1"> {% if user %}
-    <title>我是{{user.name}}，我为{{cake.name}}代言</title>
-    {% else %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>看看我属于哪种月饼</title>
-    {% endif %}
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="Honlan" />
-    <div style="display:none;">
-        <img src="{{url_for('static',filename='img/cake.png')}}" alt="">
-    </div>
     <link href="{{url_for('static',filename='css/bootstrap.min.css')}}" rel="stylesheet" />
     <link rel="shortcut icon" href="{{url_for('static',filename='img/logo.jpg')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='css/animate.css')}}">
+    <div style="display:none;">
+        <img src="{{url_for('static',filename='img/cake.jpg')}}" alt="">
+    </div>
     <script src="{{url_for('static',filename='js/jquery.js')}}"></script>
-    <script src="{{url_for('static',filename='js/jquery.lettering.js')}}"></script>
-    <script src="{{url_for('static',filename='js/jquery.textillate.js')}}"></script>
     <style>
     body {
         margin: 0;
@@ -105,27 +99,13 @@
 
 <body>
     <div id="main">
-        <div id="content">
-            {% if user %}
-            <div id="me">
-                <h4 style="color:#888;line-height:1.5;">我是<span style="color:#FF3C3C;margin-left:10px;font-size:25px;">{{user.name}}</span><br>我为<span style="color:#3C85FF;margin-left:10px;margin-right:10px;font-size:25px;">{{cake.name}}</span>代言</h4>
-                <img src="{{url_for('static',filename='')}}{{cake.image}}" alt="" style="margin-top:0px;width:60%;margin-left:20%;margin-right:20%;border-radius:10px;box-shadow:5px 5px 10px rgba(20,20,20,0.3);margin-bottom:10px;">
-                <p style="width:60%;margin-left:20%;margin-right:20%;color:#4B9C34;">{{cake.description}}</p>
+        <div id="add">
+            <h1 style="margin-top:0px;"><span style="color:#41BF42;font-size:25px;margin-right:10px;" id="word1">看看</span><span style="color:#F95353;font-size:30px;" id="word2">我属于</span><br><span style="color:#888;font-size:20px;margin-right:5px;" id="word3">哪种</span><span style="color:#D89422;font-size:35px;" id="word4">月饼</span></h1>
+            <img src="{{url_for('static',filename='img/cake.png')}}" alt="" style='width:60%;margin-left:20%;margin-right:20%;margin-bottom:20px;'>
+            <div class="form-group">
+                <input type="text" name="username" placeholder="请输入您的姓名～" class="form-control">
+                <p><span id="submit">查看</span></p>
             </div>
-            {% else %}
-            <div id="add">
-                <h1 style="margin-top:0px;"><span style="color:#41BF42;font-size:25px;margin-right:10px;" id="word1">看看</span><span style="color:#F95353;font-size:30px;" id="word2">我属于</span><br><span style="color:#888;font-size:20px;margin-right:5px;" id="word3">哪种</span><span style="color:#D89422;font-size:35px;" id="word4">月饼</span></h1>
-                <img src="{{url_for('static',filename='img/cake.png')}}" alt="" style='width:60%;margin-left:20%;margin-right:20%;margin-bottom:20px;'>
-                <div class="form-group">
-                    <input type="text" name="username" placeholder="请输入您的姓名～" class="form-control">
-                    <p><span id="submit">查看</span></p>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-        <div id="share" style="position:relative;padding-top:10px;display:none;">
-            <span style="position:absolute;top:34px;left:50%;margin-left:-80px;color:#B98A12;">晒一晒<br>我的身份</span>
-            <img src="{{url_for('static',filename='img/share.png')}}" alt="" style="width:100px;box-shadow:3px 3px 5px rgba(20,20,20,0.6);position:relative;left:40px;border-radius:5px;">
         </div>
     </div>
     <div id="footer">
@@ -135,9 +115,6 @@
 </body>
 <script>
 $(document).ready(function() {
-    if ("{{user}}" != "None") {
-        $('#share').show();
-    }
     $('#add #submit').click(function() {
         var username = $('#add input').val();
         if (username == '') {
@@ -153,11 +130,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 error: function() {},
                 success: function(data) {
-                    $('#add').hide();
-                    var me = '<div id="me"><h4 style="color:#888;line-height:1.5;">我是<span style="color:#FF3C3C;margin-left:10px;font-size:25px;">' + data['name'] + '</span><br>我为<span style="color:#3C85FF;margin-left:10px;margin-right:10px;font-size:25px;">' + data['cake']['name'] + '</span>代言</h4><img src="' + "{{url_for('static',filename='')}}" + data['cake']['image'] + '" alt="" style="margin-top:0px;width:60%;margin-left:20%;margin-right:20%;border-radius:10px;box-shadow:5px 5px 10px rgba(20,20,20,0.3);margin-bottom:10px;"><p style="width:60%;margin-left:20%;margin-right:20%;color:#4B9C34;">' + data['cake']['description'] + '</p></div>';
-                    $('#content').append(me);
-                    $('#share').show();
-                    $('title').text("我是" + data['name'] + "，我为" + data['cake']['name'] + '代言');
+                    window.location.href = "{{url_for('user',username='')}}" + data['name'];
                 }
             });
         }
