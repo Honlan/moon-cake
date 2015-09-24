@@ -156,7 +156,7 @@ $(document).ready(function() {
                     $('#content').append(me);
                     $('#share').show();
                     $('title').text("我是" + data['name'] + "，我为" + data['cake']['name'] + '代言');
-                    $('head').prepend('<img src="' + "{{url_for('static',filename='')}}" + data['cake']['image'] + '" style="display:none;">')
+                    $('head').prepend('<div style="display:none;"><img src="' + "{{url_for('static',filename='')}}" + data['cake']['image'] + '"></div>');
                 }
             });
         }
